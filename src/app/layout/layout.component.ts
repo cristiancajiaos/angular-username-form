@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-layout',
@@ -12,7 +13,9 @@ export class LayoutComponent implements OnInit {
     username: new FormControl('', [Validators.required])
   });
 
-  constructor() { }
+  constructor(
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -26,7 +29,8 @@ export class LayoutComponent implements OnInit {
     return control.touched && control.errors['required'];
   }
 
-  public ngOnSubmit(): void {
-    console.log(this.myForm.value);
+  public onSubmit(): void {
+    this.toastr.success(`Username: ${this.myForm.value.username}`);
+    this.myForm.reset();
   }
 }
